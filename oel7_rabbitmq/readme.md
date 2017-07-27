@@ -21,4 +21,4 @@ docker run -d \
 -e "PASS=root" \
 -e "DISC_FREE_LIMIT=2000" \
 -e "PASS=root" \
-sergeyxx12xx/rabbirmq:1 sh /run.sh
+sergeyxx12xx/rabbitmq:1 sh /run.sh
