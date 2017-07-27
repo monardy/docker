@@ -1,0 +1,103 @@
+{
+  "id": "/test/rabbitmq-1",
+  "cmd": "/run.sh",
+  "cpus": 1,
+  "mem": 200,
+  "disk": 2000,
+  "instances": 0,
+  "constraints": [
+    [
+      "hostname",
+      "CLUSTER",
+      "slave2.it.ru"
+    ]
+  ],
+  "acceptedResourceRoles": [
+    "*"
+  ],
+  "container": {
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "/media/data/rabbitmq/",
+        "hostPath": "/media/data/envs/test/rabbitmq1/",
+        "mode": "RW"
+      }
+    ],
+    "docker": {
+      "image": "sergeyxx12xx/rabbirmq:1",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 4369,
+          "hostPort": 0,
+          "servicePort": 10014,
+          "protocol": "tcp",
+          "labels": {}
+        },
+        {
+          "containerPort": 5672,
+          "hostPort": 0,
+          "servicePort": 10015,
+          "protocol": "tcp",
+          "labels": {}
+        },
+        {
+          "containerPort": 15672,
+          "hostPort": 0,
+          "servicePort": 10017,
+          "protocol": "tcp",
+          "labels": {}
+        }
+      ],
+      "privileged": true,
+      "parameters": [
+        {
+          "key": "hostname",
+          "value": "rabbitmq-1.test.marathon.mesos.it.ru"
+        },
+        {
+          "key": "label",
+          "value": "rabbitmq1.test"
+        }
+      ],
+      "forcePullImage": true
+    }
+  },
+  "env": {
+    "VM_MEMORY_HIGT_WATERMARK": "200",
+    "RABBITMQ_ERLANG_COOKIE": "GUTDFYUGYIIDWDJWGIHE",
+    "RABBITMQ_CLUSTER": "rabbit@rabbitmq-1.test.marathon.mesos.it.ru rabbit@rabbitmq-2.test.marathon.mesos.it.ru",
+    "LOGIN": "root",
+    "DISC_FREE_LIMIT": "2000",
+    "PASS": "root"
+  },
+  "healthChecks": [
+    {
+      "protocol": "TCP",
+      "portIndex": 0,
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+      "ignoreHttp1xx": false
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 10014,
+      "protocol": "tcp",
+      "labels": {}
+    },
+    {
+      "port": 10015,
+      "protocol": "tcp",
+      "labels": {}
+    },
+    {
+      "port": 10017,
+      "protocol": "tcp",
+      "labels": {}
+    }
+  ]
+}
